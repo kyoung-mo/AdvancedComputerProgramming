@@ -22,7 +22,7 @@ phoneData phoneList[LIST_NUM];
  */
 void InputPhoneData(void)
 {
-	phoneData data;
+	phoneList[numOfData];
 
 	if (numOfData >= LIST_NUM)
 	{
@@ -32,14 +32,14 @@ void InputPhoneData(void)
 
 	printf("━━━━━━━━━━━━━━━━ \n");
 	printf("이름 》 ");
-	gets(data.name);
+	gets(phoneList[numOfData].name);
 
 	printf("번호 》 ");
-	gets(data.phoneNum);
+	gets(phoneList[numOfData].phoneNum);
 
 	numOfData ++;
 	printf("입력이 완료되었습니다. \n");
-
+	getchar();
 }
 
 /* 함    수: void ShowAllData(void)
@@ -51,7 +51,7 @@ void ShowAllData(void)
 
 {
 	printf("━━━━━━━━━━━━━━━━ \n");
-	phoneData phone;
+	phoneData data;
 
 	if (numOfData >= LIST_NUM)
 	{
@@ -59,12 +59,13 @@ void ShowAllData(void)
 		return;
 	}
 
-	for (int i = 0; i < numOfData; i++)
-		ShowPhoneInfo;
+	for (int i = 0; i < numOfData; i++) {
+		ShowPhoneInfo(phoneList[i]);
+	}
 
 
 	printf("출력이 완료되었습니다. \n");
-	
+	getchar();
 
 }
 
@@ -76,22 +77,25 @@ void ShowAllData(void)
 void SearchPhoneData(void)
 
 {
-	printf("━━━━━━━━━━━━━━━━ \n");
-	phoneData phone;
-
+	char searchName[NAME_LEN];
+	
 	if (numOfData >= LIST_NUM)
 	{
 		printf("\n메모리 공간이 부족합니다.");
 		return;
 	}
 
-	for (int i = 0; i < numOfData; i++)
-		ShowPhoneInfo;
-
-
-	printf("검색이 완료되었습니다. \n");
-
-
+	printf("찾는 이름은? ");
+	gets(searchName);
+	
+		for (int i = 0; i < numOfData; i++) {
+			if (!strcmp(phoneList[i].name, searchName)) {
+				ShowPhoneInfo(phoneList[i]);
+				printf("검색이 끝났습니다.");
+				getchar();
+				return;
+			}
+		}
 }
 
 /* 함    수: void DeletePhoneData(void)
@@ -102,8 +106,8 @@ void SearchPhoneData(void)
 void DeletePhoneData(void)
 
 {
-	printf("━━━━━━━━━━━━━━━━ \n");
-	phoneData phone;
+
+	char deleteName[NAME_LEN];
 
 	if (numOfData >= LIST_NUM)
 	{
@@ -111,12 +115,18 @@ void DeletePhoneData(void)
 		return;
 	}
 
-	for (int i = 0; i < numOfData; i++)
-		ShowPhoneInfo;
+	printf("찾는 이름은? ");
+	gets(deleteName);
 
-
-	printf("삭제가 완료되었습니다. \n");
-
+	for (int i = 0; i < numOfData; i++) {
+		if (!strcmp(phoneList[i].name, deleteName)) {
+			phoneList[i] = phoneList[i + 1];
+			numOfData--;
+			printf("삭제가 완료되었습니다.");
+			getchar();
+			return;
+		}
+	}
 
 }
 
