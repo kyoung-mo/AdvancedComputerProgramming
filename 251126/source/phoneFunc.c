@@ -70,6 +70,7 @@ void ShowAllData(void)
 void SearchPhoneData(void)
 {
     int i;
+    int cnt = 0;
     char searchName[NAME_LEN];
 
     fputs("찾는 이름은? ", stdout);
@@ -80,14 +81,15 @@ void SearchPhoneData(void)
         if (!strcmp(phoneList[i]->name, searchName))
         {
             ShowPhoneInfoByPtr(phoneList[i]);
-
-            puts("검색이 완료되었습니다.");
-            getchar();
-            return;
+            cnt++;
         }
-    }
 
-    puts("찾는 이름의 데이터가 존재하지 않습니다.");
+    }
+    if (cnt > 0)
+        puts("검색이 완료되었습니다.");
+    else
+        puts("찾는 이름의 데이터가 존재하지 않습니다.");
+
     getchar();
 }
 
@@ -99,6 +101,7 @@ void SearchPhoneData(void)
 void DeletePhoneData(void)
 {
     int i, j;
+    int cnt = 0;
     char delName[NAME_LEN];
 
     fputs("찾는 이름은? ", stdout);
@@ -106,7 +109,7 @@ void DeletePhoneData(void)
 
     for (i = 0; i < numOfData; i++)
     {
-        if (!strcmp(phoneList[i]->name, delName))
+        if (!strcmp(phoneList[i]->name, delName)) // strcmp > 같으면 0 다르면 1 반환, !strcmp면 같으면 1 다르면 0 반환
         {
             free(phoneList[i]);
             for (j = i; j < numOfData - 1; j++)
@@ -115,13 +118,14 @@ void DeletePhoneData(void)
             }
 
             numOfData--;
-            puts("삭제가 완료되었습니다.");
-            getchar();
-            return;
+            cnt++;
         }
     }
 
-    puts("찾는 이름의 데이터가 존재하지 않습니다.");
+    if(cnt>0)
+        puts("삭제가 완료되었습니다.");
+    else
+        puts("찾는 이름의 데이터가 존재하지 않습니다.");
     getchar();
 }
 
